@@ -1,11 +1,22 @@
 version: '2'
 
 services:
-  apache:
+  web001:
     image: porchn/php5.6.28-apache
-    container_name: apache
-    ports:
-      - "8080:80"
+    container_name: web001
+    volumes:
+      - ./apache2/conf:/etc/apache2/sites-enabled
+      - ./apache2/www:/var/www
+      - ./apache2/logs:/var/log/apache2
+    environment:
+      - TZ=Asia/Bangkok
+    restart: always
+    networks:
+      - webnetwork
+
+  web002:
+    image: porchn/php5.6.28-apache
+    container_name: web002
     volumes:
       - ./apache2/conf:/etc/apache2/sites-enabled
       - ./apache2/www:/var/www
@@ -30,7 +41,8 @@ services:
       - NGINX_PORT=80
     restart: always
     links: 
-      - apache:apache
+      - web001:web001
+      - web002:web002
     networks:
       - webnetwork
       
