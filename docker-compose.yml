@@ -6,8 +6,8 @@ services:
     container_name: web001
     volumes:
       - ./apache2/conf:/etc/apache2/sites-enabled
-      - ./apache2/www:/var/www
-      - ./apache2/logs:/var/log/apache2
+      - ./www:/var/www
+      - ./logs:/var/log/apache2
     environment:
       - TZ=Asia/Bangkok
     restart: always
@@ -19,8 +19,8 @@ services:
     container_name: web002
     volumes:
       - ./apache2/conf:/etc/apache2/sites-enabled
-      - ./apache2/www:/var/www
-      - ./apache2/logs:/var/log/apache2
+      - ./www:/var/www
+      - ./logs:/var/log/apache2
     environment:
       - TZ=Asia/Bangkok
     restart: always
@@ -35,7 +35,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
-      - data-cache:/data-cache
+      - ./nginx/caches:/data-cache
     environment:
       - TZ=Asia/Bangkok
       - NGINX_PORT=80
