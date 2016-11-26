@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  apache:
+    image: porchn/php5.6.28-apache
+    container_name: apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apache2/conf:/etc/apache2/sites-enabled
+      - ./apache2/www:/var/www
+      - ./apache2/logs:/var/log/apache2
+    environment:
+      - TZ=Asia/Bangkok
+    restart: always
+    networks:
+      - webnetwork
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - data-cache:/data-cache
+    environment:
+      - TZ=Asia/Bangkok
+      - NGINX_PORT=80
+    restart: always
+    links: 
+      - apache:apache
+    networks:
+      - webnetwork
+      
+volumes:
+  data-cache:
+    driver: local
+
+networks:
+  webnetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.20.0.0/16
+          ip_range: 10.20.5.0/24
+          gateway: 10.20.5.254
+
