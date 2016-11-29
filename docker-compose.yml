@@ -26,6 +26,16 @@ services:
     restart: always
     networks:
       - webnetwork
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    networks:
+      - default
+    external_links:
+      - mysql:db
+    ports:
+      - 8080:80
 
   nginx:
     image: nginx
