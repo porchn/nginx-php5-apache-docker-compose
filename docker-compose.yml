@@ -32,8 +32,10 @@ services:
     container_name: phpmyadmin
     networks:
       - default
-    external_links:
-      - mysql:db
+    environment:
+      PMA_HOST: 127.0.0.1
+      PMA_ABSOLUTE_URI: /phpmyadmin/
+      PMA_PORT: 3306
     ports:
       - 8080:80
 
