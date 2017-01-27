@@ -31,7 +31,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     networks:
-      - default
+      - webnetwork
     environment:
       PMA_HOST: 127.0.0.1
       PMA_ABSOLUTE_URI: /phpmyadmin/
