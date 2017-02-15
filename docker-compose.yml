@@ -5,9 +5,9 @@ services:
     image: porchn/php5.6.28-apache
     container_name: web001
     volumes:
-      - ./apache/conf:/etc/apache2/sites-enabled
-      - ./www:/var/www
-      - ./apache/logs:/var/log/apache2
+      - ./apache/conf:/etc/apache2/sites-enabled:Z
+      - ./www:/var/www:Z
+      - ./apache/logs:/var/log/apache2:Z
     environment:
       - TZ=Asia/Bangkok
     restart: always
@@ -18,9 +18,9 @@ services:
     image: porchn/php5.6.28-apache
     container_name: web002
     volumes:
-      - ./apache/conf:/etc/apache2/sites-enabled
-      - ./www:/var/www
-      - ./apache/logs:/var/log/apache2
+      - ./apache/conf:/etc/apache2/sites-enabled:Z
+      - ./www:/var/www:Z
+      - ./apache/logs:/var/log/apache2:Z
     environment:
       - TZ=Asia/Bangkok
     restart: always
@@ -38,6 +38,7 @@ services:
       PMA_PORT: 3306
     ports:
       - 8080:80
+    restart: always
 
   nginx:
     image: nginx
@@ -46,8 +47,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/conf:/etc/nginx/conf.d
-      - ./nginx/caches:/data-cache
+      - ./nginx/conf:/etc/nginx/conf.d:Z
+      - ./nginx/caches:/data-cache:Z
     environment:
       - TZ=Asia/Bangkok
       - NGINX_PORT=80
@@ -71,4 +72,3 @@ networks:
         - subnet: 10.20.0.0/16
           ip_range: 10.20.5.0/24
           gateway: 10.20.5.254
-
